@@ -1,14 +1,40 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>
-      Ionic Blank
+      Beacult
     </ion-title>
   </ion-toolbar>
 </ion-header>
-
-<ion-content>
-  <div class="ion-padding">
-    The world is your oyster.
-    <p>If you get lost, the <a target="_blank" rel="noopener" href="https://ionicframework.com/docs/">docs</a> will be your guide.</p>
-  </div>
+<ion-content fullscreen>
+  <ion-searchbar [(ngModel)]="searchTerm" (ionInput)="setFilteredLocations()"></ion-searchbar>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12">
+        <ion-card>
+          <img src="assets/images/tmunicipal.jpg" />
+          <ion-card-header>
+            <ion-card-subtitle>Local</ion-card-subtitle>
+            <ion-card-title>Teatro Municipal</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            O Theatro Municipal de São Paulo é um dos mais importantes teatros do Brasil e um dos cartões postais da cidade de São Paulo.
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col size="12">
+        <ion-card>
+          <img src="assets/images/casa-das-rosas-sao-paulo.jpg" />
+          <ion-card-header>
+            <ion-card-subtitle>Local</ion-card-subtitle>
+            <ion-card-title>Casa das Rosas</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            Desde 2004 a Casa das Rosas oferece uma programação cultural voltada para a literatura (oficinas, debates, palestras, lançamentos de livros, peças de teatro, saraus…).
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
+
+

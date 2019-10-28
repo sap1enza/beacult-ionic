@@ -3,6 +3,7 @@ import { trigger, style, animate, transition } from '@angular/animations';
 import { AuthProvider} from '../../providers/auth';
 import { FirebaseProvider } from '../../providers/firebase';
 import { LoadingController } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -64,7 +65,8 @@ export class LoginPage implements OnInit {
   constructor(
     private authProvider: AuthProvider,
     private firebaseProvider: FirebaseProvider,
-    private loadingController: LoadingController
+    private loadingController: LoadingController,
+    private router: Router,
   ) { }
 
   ngOnInit() {
@@ -94,6 +96,8 @@ export class LoginPage implements OnInit {
 
     this.authProvider.login(this.loginForm)
     .then((res) => {
+      console.log(res);
+      this.router.navigate(['/home']);
     })
     .catch((err) => {
     })
