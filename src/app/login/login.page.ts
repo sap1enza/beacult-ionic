@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { trigger, style, animate, transition } from '@angular/animations';
 import { AuthProvider} from '../../providers/auth';
 import { FirebaseProvider } from '../../providers/firebase';
-import { LoadingController } from '@ionic/angular';
+import { LoadingController, NavController } from '@ionic/angular';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'app-login',
@@ -62,9 +63,11 @@ export class LoginPage implements OnInit {
   }
 
   constructor(
+    public navCtrl: NavController,
     private authProvider: AuthProvider,
     private firebaseProvider: FirebaseProvider,
-    private loadingController: LoadingController
+    private loadingController: LoadingController,
+    private storage: Storage
   ) { }
 
   ngOnInit() {
@@ -94,6 +97,16 @@ export class LoginPage implements OnInit {
 
     this.authProvider.login(this.loginForm)
     .then((res) => {
+      let uid = res.user.uid;
+
+      this.firebaseProvider.getUser(uid)
+      .then((res) => {
+        let data = res.data();
+        this.storage.set('user', data)
+        .then(() => {
+          this.navCtrl.navigateRoot('/home');
+        })
+      })
     })
     .catch((err) => {
     })
@@ -114,6 +127,10 @@ export class LoginPage implements OnInit {
 
       this.firebaseProvider.postUser(data)
       .then((res) => {
+        this.storage.set('user', data)
+        .then(() => {
+          this.navCtrl.navigateRoot('/home');
+        })
       })
       .catch((err) => {
       })
