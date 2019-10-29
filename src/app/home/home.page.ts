@@ -1,4 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
+import { Platform } from '@ionic/angular';
+
+declare var evothings: any;
 
 @Component({
   selector: 'app-home',
@@ -7,8 +10,27 @@ import { Component } from '@angular/core';
 })
 export class HomePage {
   searchTerm = '';
+  beacon: any;
 
-  constructor() {}
+  constructor(
+    private platform: Platform,
+    private change: ChangeDetectorRef
+  ) {}
+
+  scanBeacons() {
+    if(this.platform.is('cordova')) {
+      evothings.eddystone.startScan(
+        dados => {
+          this.beacon = dados;
+
+          setTimeout(() => this.change.detectChanges(), 1000);
+        },
+        error => {
+          console.log(error);
+        }
+      )
+    }
+  }
 
   ionViewDidLoad() {
     this.setFilteredLocations();
