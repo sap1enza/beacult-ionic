@@ -6,6 +6,22 @@
   </ion-toolbar>
 </ion-header>
 <ion-content fullscreen>
+  <div class="center">
+
+    <ion-card *ngIf="beacon">
+      <ion-card-header>
+        Beacon encontrado!
+      </ion-card-header>
+      <ion-card-content>
+        <p>Endereço: {{ beacon.address }}</p>
+        <a *ngIf="beacon.url" [href]="beacon.url">URL: {{ beacon.url }}</a>
+      </ion-card-content>
+    </ion-card>
+    
+    <button ion-button (click)="scanBeacons()" class="btn-scan-beacons">Escanear Beacons</button>
+  </div>
+
+
   <ion-searchbar [(ngModel)]="searchTerm" (ionInput)="setFilteredLocations()"></ion-searchbar>
   <ion-grid>
     <ion-row>
